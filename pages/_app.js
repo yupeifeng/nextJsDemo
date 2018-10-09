@@ -4,7 +4,8 @@ import {Provider} from 'react-redux';
 import withRedux from 'next-redux-wrapper';
 import initializeStore from '/initializeStore';
 
-class MyApp extends App {
+@withRedux(initializeStore, {debug: false})
+export default class MyApp extends App {
     static async getInitialProps({Component, ctx}) {
         return {
             pageProps: {
@@ -24,6 +25,4 @@ class MyApp extends App {
             </Container>
         );
     }
-}
-
-export default withRedux(initializeStore, {debug: false})(MyApp);
+};
