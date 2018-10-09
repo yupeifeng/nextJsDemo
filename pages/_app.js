@@ -3,7 +3,8 @@ import React from 'react';
 import {Provider} from 'react-redux';
 import withRedux from 'next-redux-wrapper';
 import initializeStore from '/initializeStore';
-import '/static/css/index.css';
+import '/static/css/main.css';
+import 'antd/dist/antd.css';
 
 @withRedux(initializeStore, {debug: false})
 export default class MyApp extends App {
