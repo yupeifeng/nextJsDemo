@@ -5,15 +5,18 @@ const app = next({dev});
 const handle = app.getRequestHandler();
 
 app.prepare().then(() => {
-    let server = express()
+    let server = express();
 
-    server.get('/d/:id', (req, res) => {
-        let actualPage = '/detail';
-        let queryParams = {
-            title: req.params.id
-        };
-        app.render(req, res, actualPage, queryParams);
-    });
+    /***
+     * 使用后端重定向会使新页面的Link失效
+     */
+    /* server.get('/d/:id', (req, res) => {
+         let actualPage = '/detail';
+         let queryParams = {
+             title: req.params.id
+         };
+         app.render(req, res, actualPage, queryParams);
+     });*/
 
     server.get('*', (req, res) => {
         return handle(req, res)
@@ -26,4 +29,4 @@ app.prepare().then(() => {
 }).catch((ex) => {
     console.error(ex.stack)
     process.exit(1)
-})
+});

@@ -41,7 +41,7 @@ export default class Index extends React.Component {
                 <ul>
                     {list.map(({show}) => (
                         <li key={show.id}>
-                            <Link href={`/d/${show.id}`}>
+                            <Link as={`/d/${show.id}`} href={`/detail?title=${show.id}`}>
                                 <a>{show.name}</a>
                             </Link>
                         </li>
@@ -55,25 +55,6 @@ export default class Index extends React.Component {
                 }}>
                     点击换一批
                 </div>
-                <style jsx>{`
-      h1, a {
-        font-family: "Arial";
-      }
-      ul {
-        padding: 0;
-      }
-      li {
-        list-style: none;
-        margin: 5px 0;
-      }
-      a {
-        text-decoration: none;
-        color: blue;
-      }
-      a:hover {
-        opacity: 0.6;
-      }
-    `}</style>
             </Layout>
         )
     }

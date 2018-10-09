@@ -23,6 +23,9 @@
     "redux-devtools-extension": "^2.13.5",
     "redux-thunk": "^2.3.0",
     "babel-plugin-root-import": "^5.1.0",
-    "@babel/plugin-proposal-decorators": "^7.1.2"
+    "@babel/plugin-proposal-decorators": "^7.1.2",
+    "@zeit/next-css": "^1.0.1",
+    "antd": "^3.10.0",
+    "babel-plugin-import": "^1.9.1"
   }
 }
