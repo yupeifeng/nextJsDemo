@@ -5,14 +5,14 @@ const app = next({dev});
 const handle = app.getRequestHandler();
 
 app.prepare().then(() => {
-    const server = express()
+    let server = express()
 
     server.get('/d/:id', (req, res) => {
-        const actualPage = '/detail'
-        const queryParams = {
+        let actualPage = '/detail';
+        let queryParams = {
             title: req.params.id
-        }
-        app.render(req, res, actualPage, queryParams)
+        };
+        app.render(req, res, actualPage, queryParams);
     });
 
     server.get('*', (req, res) => {

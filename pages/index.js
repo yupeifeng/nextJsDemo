@@ -1,34 +1,45 @@
 import React from 'react';
-import Layout from '../components/MyLayout.js';
+import Layout from '/components/MyLayout.js';
 import Link from 'next/link';
 import fetch from 'isomorphic-unfetch';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import {changeStore} from '/modules/index/action';
+import {indexType} from "/modules/actiontype";
 
+@connect(
+    (state, ownProps) => {
+        return {
+            index: state.index
+        };
+    },
+    (dispatch, ownProps) => {
+        return {
+            changeStore: bindActionCreators(changeStore, dispatch)
+        };
+    }
+)
 export default class Index extends React.Component {
-    static async getInitialProps() {
-        const res = await fetch('https://api.tvmaze.com/search/shows?q=batman');
-        const data = await res.json();
-
-        console.log(`Show data fetched. Count: ${data.length}`);
+    static async getInitialProps({store, isServer, pathname, query}) {
+        let res = await fetch('https://api.tvmaze.com/search/shows?q=batman');
+        let data = await res.json();
+        store.dispatch({type: indexType.indexStore_change_store, store: {title: 'Batman', list: data || []}});
 
         return {
-            list: data
-        }
-    }
-
-    constructor(props) {
-        super(props);
-        this.state = {
-            title: 'Batman',
-            list: props.list || []
+            isServer: isServer,
+            pathname: pathname,
+            query: query
         }
     }
 
     render() {
+        let {title, list} = this.props.index;
+
         return (
             <Layout>
-                <h1>{this.state.title} TV Shows</h1>
+                <h1>{title} TV Shows</h1>
                 <ul>
-                    {this.state.list.map(({show}) => (
+                    {list.map(({show}) => (
                         <li key={show.id}>
                             <Link href={`/d/${show.id}`}>
                                 <a>{show.name}</a>
@@ -37,15 +48,10 @@ export default class Index extends React.Component {
                     ))}
                 </ul>
                 <div onClick={async () => {
-                    const res = await fetch('https://api.tvmaze.com/search/shows?q=ironman');
-                    const data = await res.json();
+                    let res = await fetch('https://api.tvmaze.com/search/shows?q=ironman');
+                    let data = await res.json();
 
-                    console.log(`Show data fetched. Count: ${data.length}`);
-
-                    this.setState({
-                        title: 'IronMan',
-                        list: data
-                    })
+                    this.props.changeStore({title: 'Batman', list: data || []});
                 }}>
                     点击换一批
                 </div>
