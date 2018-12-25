@@ -51,7 +51,7 @@ export default class Index extends React.Component {
                     let res = await fetch('https://api.tvmaze.com/search/shows?q=ironman');
                     let data = await res.json();
 
-                    this.props.changeStore({title: 'IronMan', list: data || []});
+                    this.props.changeStore({title: 'Batman', list: data || []});
                 }}>
                     点击换一批
                 </div>
